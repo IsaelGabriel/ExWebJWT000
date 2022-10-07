@@ -13,22 +13,23 @@
     $pass = "ProgWeb3";
     $db = "progweb3";
     $conn = mysqli_connect("127.0.0.1", $user, $pass, $db);
-    if ($conn->connect_errno){
+    if ($conn->connect_errno)
+    {
         die("Erro de conexão" . $conn->connect_error);
     } 
     
-    $idUsuario = $_POST["usuario"];
-    $senhaUsuario = $_POST["senha"];
-    $sql = "select * from usuarios where idusuario = '". $idUsuario ."' and senhausuario = '". $senhaUsuario ."'";
+    $user_id = $_POST["usuario"];
+    $user_password = $_POST["senha"];
+    $sql = "select * from usuarios where idusuario = '". $user_id ."' and senhausuario = '". $user_password ."'";
     $resultadoQuery = mysqli_query($conn, $sql);
     if ($resultadoQuery->num_rows == 0 ){
-        die("usuário ou senha inválidos");
+        die("Usuário ou senha inválidos");
     }
     $arrayQuery = $resultadoQuery->fetch_assoc();
-    echo "<BR>";
+    echo "</br>";
     echo "usuário digitado: " . $arrayQuery["idusuario"];
-    echo "<BR>";
-    echo "<BR>";
+    echo "</br></br>";
+    echo "</br>";
     echo "senha digitada: " . $arrayQuery["senhausuario"];
     
     $payload = [
@@ -37,18 +38,18 @@
         'email' => $arrayQuery["email"]
     ];
     
-    echo "<BR>";
-    echo "<BR>";
-    $token = $myjwt->criaToken($payload);
+    echo "</br>";
+    echo "</br>";
+    $token = $myjwt->generate_token($payload);
     echo $token;
     
-    echo "<BR>";
-    echo "<BR>";
-    echo "Token validado com sucesso?<br>";
-    if ($myjwt->validaToken($token)){
-        echo "sim<Br>";
+    echo "</br>";
+    echo "</br>";
+    echo "Token validado com sucesso?</br>";
+    if ($myjwt->validate_token($token)){
+        echo "sim</br>";
     }else{
-        echo "não<br>";
+        echo "não</br>";
     }
     
     
