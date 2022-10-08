@@ -4,13 +4,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            inline-size: 80%;
+            overflow-wrap: break-word;
+        }
+    </style>
 </head>
 <body>
     <h1>Login</h1>
     <form action="./receive_form.php" method="post">
         </br> Usuário: <input type="text" name="usuario">
         </br> Digite sua senha: <input type="password" name="senha">
-    <input type="submit" value="Enviar!">
+    </br><input type="submit" value="Enviar!">
 </form>
 </body>
 </html>
