@@ -90,7 +90,7 @@
             $payload = $part[1];
             $signature = $part[2];
 
-            $decoded_payload = (array)base64_decode($payload);
+            $decoded_payload = (array)json_decode(base64_decode($payload));
 
             if($decoded_payload['exp'] <= time() && $decoded_payload['rt'] == $rt)
             {
@@ -108,7 +108,7 @@
         {
             $payload = explode(".",$jwt)[1];
 
-            $decoded_payload = (array)base64_decode($payload);
+            $decoded_payload = (array) json_decode(base64_decode($payload));
             if($decoded_payload['rt'] == $rt)
             {
                 return true;
