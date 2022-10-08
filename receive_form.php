@@ -43,18 +43,19 @@
         
         if (isset($_POST["token"]))
         {
-            echo "</br> Usuário digitado: {$array_query["idusuario"]} </br></br>
-                </br>senha digitada:  {$array_query["senhausuario"]}</br></br>";
-
             $token = $_POST["token"];
             $refresh_token = $_POST["refresh_token"];
             if ($myrt->validate_token($token,$refresh_token))
             {
                 $payload = $myjwt->get_payload($token);
                 $payload = (array)json_decode($payload);
-                $token = $myrt->set_jwt($token,$refresh_token);
+                if($payload['exp'] <= time())
+                {
+                    $payload['exp'] = time() + 120;
+                }
+                $token = $myjwt->generate_token($payload);
                 $remaining_time = $payload["exp"] - time();
-                echo "Token possui {$remaining_time} segundos restantes.";
+                echo "Token possui <b>{$remaining_time}</b> segundos restantes.<br><br>";
             }else{
                 die("Refresh token inválido!<br><br>");
             }

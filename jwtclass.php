@@ -83,27 +83,6 @@
             return "$header.$payload.$signature";
         }
 
-        public function set_jwt($jwt,$rt)
-        {
-            $part = explode(".",$jwt);
-            $header = $part[0];
-            $payload = $part[1];
-            $signature = $part[2];
-
-            $decoded_payload = (array)json_decode(base64_decode($payload));
-
-            if($decoded_payload['exp'] <= time() && $decoded_payload['rt'] == $rt)
-            {
-                $decoded_payload['exp'] = time() + 120;
-                $payload = $decoded_payload;
-                $payload = json_encode($payload);
-                $payload = base64_encode($payload);
-                return $header.$payload.$signature;
-            }
-
-            return $jwt;
-        }
-
         public function validate_token($jwt,$rt)
         {
             $payload = explode(".",$jwt)[1];
